@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 1: Single Page Application</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Navbar */
+        nav {
+            background-color: #0f172a;
+            color: #ffffff;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .nav-container {
+            max-width: 1152px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .nav-links button:hover,
+        .nav-links button.active {
+            color: #22d3ee;
+            font-weight: 600;
+        }
+
+        /* Main Container */
+        main {
+            flex-grow: 1;
+            max-width: 1152px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        /* Home Page */
+        .home-section {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .home-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .home-desc {
+            font-size: 1.05rem;
+            color: #475569;
+            max-width: 38rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            background-color: #0891b2;
+            color: #ffffff;
+            font-weight: 500;
+            padding: 0.75rem 1.75rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary:hover {
+            background-color: #0e7490;
+        }
+
+        /* Projects Page */
+        .page-header {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1e293b;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0891b2;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-desc {
+            color: #475569;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Contact Page */
+        .contact-container {
+            max-width: 30rem;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 0.4rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.65rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            outline: none;
+            font-size: 0.95rem;
+            background-color: #fff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: #0891b2;
+            box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15);
+        }
+
+        .alert-success {
+            background-color: #dcfce7;
+            color: #15803d;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            border: 1px solid #bbf7d0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.25rem;
+            color: #64748b;
+            font-size: 0.85rem;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 2.5rem;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <!-- React 17 & ReactDOM stable CDN -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+
+    <script>
+        const e = React.createElement;
+
+        // 1. Navbar Component (Centered in one single line)
+        function Navbar({ activePage, setActivePage }) {
+            return e('nav', null,
+                e('div', { className: 'nav-container' },
+                    e('div', { className: 'nav-links' },
+                        e('button', {
+                            className: activePage === 'home' ? 'active' : '',
+                            onClick: () => setActivePage('home')
+                        }, 'Home'),
+                        e('button', {
+                            className: activePage === 'projects' ? 'active' : '',
+                            onClick: () => setActivePage('projects')
+                        }, 'Projects'),
+                        e('button', {
+                            className: activePage === 'contact' ? 'active' : '',
+                            onClick: () => setActivePage('contact')
+                        }, 'Contact Us')
+                    )
+                )
+            );
+        }
+
+        // 2. Home Page Component
+        function Home({ setActivePage }) {
+            return e('div', { className: 'home-section' },
+                e('h1', { className: 'home-title' }, 'Single Page Application (SPA)'),
+                e('p', { className: 'home-desc' },
+                    'This application is built with React to meet internship requirements smoothly without any full page reloads.'
+                ),
+                e('button', {
+                    className: 'btn-primary',
+                    onClick: () => setActivePage('projects')
+                }, 'Explore Projects')
+            );
+        }
+
+        // 3. Projects Page Component
+        function Projects() {
+            const projectsList = [
+                { id: 1, title: 'Advanced HR Dashboard', desc: 'HR management and data tracking dashboard with advanced analytics.' },
+                { id: 2, title: 'Inflation Gap Dashboard', desc: 'An application analyzing inflation indicators and linking them to economic models.' },
+                { id: 3, title: 'Coffee Growth Model', desc: 'An interactive dashboard displaying standard regression equations and growth trends.' }
+            ];
+
+            return e('div', null,
+                e('h2', { className: 'page-header' }, 'Featured Projects'),
+                e('div', { className: 'grid-3' },
+                    projectsList.map(project =>
+                        e('div', { key: project.id, className: 'card' },
+                            e('h3', { className: 'card-title' }, project.title),
+                            e('p', { className: 'card-desc' }, project.desc)
+                        )
+                    )
+                )
+            );
+        }
+
+        // 4. Contact Page Component
+        function Contact() {
+            const [submitted, setSubmitted] = React.useState(false);
+            const [formData, setFormData] = React.useState({ name: '', email: '', message: '' });
+
+            const handleSubmit = (eObj) => {
+                eObj.preventDefault();
+                setSubmitted(true);
+            };
+
+            return e('div', { className: 'contact-container' },
+                e('h2', { className: 'page-header' }, 'Contact Us'),
+                submitted
+                    ? e('div', { className: 'alert-success' },
+                        'Thank you for reaching out! Your message has been sent successfully.'
+                      )
+                    : e('form', { onSubmit: handleSubmit, className: 'card' },
+                        e('div', { className: 'form-group' },
+                            e('label', null, 'Name'),
+                            e('input', {
+                                type: 'text',
+                                required: true,
+                                className: 'form-control',
+                                value: formData.name,
+                                onChange: (ev) => setFormData({...formData, name: ev.target.value})
+                            })
+                        ),
+                        e('div', { className: 'form-group' },
+                            e('label', null, 'Email'),
+                            e('input', {
+                                type: 'email',
+                                required: true,
+                                className: 'form-control',
+                                value: formData.email,
+                                onChange: (ev) => setFormData({...formData, email: ev.target.value})
+                            })
+                        ),
+                        e('div', { className: 'form-group' },
+                            e('label', null, 'Message'),
+                            e('textarea', {
+                                rows: 4,
+                                required: true,
+                                className: 'form-control',
+                                value: formData.message,
+                                onChange: (ev) => setFormData({...formData, message: ev.target.value})
+                            })
+                        ),
+                        e('button', {
+                            type: 'submit',
+                            className: 'btn-primary',
+                            style: { width: '100%', marginTop: '0.5rem' }
+                        }, 'Send Message')
+                    )
+            );
+        }
+
+        // Main App Component
+        function App() {
+            const [activePage, setActivePage] = React.useState('home');
+
+            return e('div', { style: { minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' } },
+                e('div', null,
+                    e(Navbar, { activePage, setActivePage }),
+                    e('main', null,
+                        activePage === 'home' && e(Home, { setActivePage }),
+                        activePage === 'projects' && e(Projects),
+                        activePage === 'contact' && e(Contact)
+                    )
+                ),
+                e('footer', null, 'All rights reserved © 2026 - Task 1 SPA')
+            );
+        }
+
+        ReactDOM.render(e(App), document.getElementById('root'));
+    </script>
+</body>
+</html>
